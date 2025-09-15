@@ -1,0 +1,118 @@
+import java.util.*;
+/**
+ * Graph implementation using an adjacency list.
+ * The adjacency list is represented as a map where each key is a vertex label
+ * and the value is a list of edges originating from that vertex.
+ * Each edge contains the destination vertex label and the weight of the edge.
+ */
+
+public class GraphAdjList implements Graph {
+    // Map to store vertices by their labels
+    private Map<String, Vertex> vertices;
+    //Initiate the field as a map of String keys to lists of edges
+    //This uses the interface for greater flexibility than a concrete class
+    private Map<String, List<Edge>> adjacencyList;
+
+    /**
+     * Constructor
+     */
+    public GraphAdjList() {
+        //Create an array to hold the vertices
+        vertices = new HashMap<>();
+        //Create the adjacency list as a HashMap
+        adjacencyList = new HashMap<>();
+    }
+
+    /**
+     * Add a vertex to the graph - initialise its adjacency list
+     * @param vertexLabel
+     */
+    @Override    
+    public void addVertex(String vertexLabel) {
+        vertices.put(vertexLabel, new Vertex(vertexLabel));
+        //Initialize the adjacency list for this vertex
+        adjacencyList.put(vertexLabel, new ArrayList<>());
+    }
+    
+    /**
+     * Add an edge to the graph
+     * @param startLabel - the label of the start vertex
+     * @param endLabel - the label of the end vertex
+     * @param weight - the weight of the edge
+     */
+    @Override
+    public void addEdge(String startLabel, String endLabel, int weight) {
+        adjacencyList.get(startLabel).add(new Edge(endLabel, weight));
+    }
+
+    /**
+     * Get the edges of a vertex
+     * @param vertexLabel
+     * @return
+     */
+    public ArrayList<Edge> getEdges(String vertexLabel) {
+        return new ArrayList<>(adjacencyList.get(vertexLabel));
+    }
+
+    /**
+     * Get the number of vertices in the graph
+     * @return
+     */
+    @Override
+    public int size() {
+        return vertices.size();
+    }
+
+    /**
+     * Clear the visited status of all vertices
+     */
+    @Override
+    public void clearVisited() {
+        for (Vertex vertex : vertices.values()) {
+            vertex.setVisited(false);
+        }
+    }
+
+    /**
+     * Display the graph
+     */
+    @Override
+    public void display() {
+        for (Vertex vertex : vertices.values()) {
+            System.out.print(vertex.getLabel() + " ");
+            List<Edge> edges = adjacencyList.get(vertex.getLabel());
+            for (Edge edge : edges) {
+                String destLabel = edge.getNeighbourVertex();
+                int weight = edge.getWeight();
+                System.out.print("(" + destLabel + ", " + weight + ") ");
+            }
+            System.out.println();
+        }
+    }
+
+    /**
+     * Get a vertex from the graph
+     * @param vertexLabelString
+     * @return
+     */
+    @Override
+    public Vertex getVertex(String vertexLabelString) {
+        return vertices.get(vertexLabelString);
+    }
+
+    /**
+     * Get the weight of an edge between two vertices
+     * @param startLabel
+     * @param endLabel
+     * @return the weight of the edge, or 0 if no edge exists
+     */
+    @Override
+    public int fetchEdgeWeight(String startLabel, String endLabel) {
+        for (Edge edge : adjacencyList.get(startLabel)) {
+            if (edge.getNeighbourVertex().equals(endLabel)) {
+                return edge.getWeight();
+            }
+        }
+        return 0;
+    }
+}
