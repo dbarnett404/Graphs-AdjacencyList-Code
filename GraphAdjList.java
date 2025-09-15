@@ -7,8 +7,7 @@ import java.util.*;
  */
 
 public class GraphAdjList implements Graph {
-    // Map to store vertices by their labels
-    private Map<String, Vertex> vertices;
+
     //Initiate the field as a map of String keys to lists of edges
     //This uses the interface for greater flexibility than a concrete class
     private Map<String, List<Edge>> adjacencyList;
@@ -17,8 +16,7 @@ public class GraphAdjList implements Graph {
      * Constructor
      */
     public GraphAdjList() {
-        //Create an array to hold the vertices
-        vertices = new HashMap<>();
+
         //Create the adjacency list as a HashMap
         adjacencyList = new HashMap<>();
     }
@@ -29,7 +27,6 @@ public class GraphAdjList implements Graph {
      */
     @Override    
     public void addVertex(String vertexLabel) {
-        vertices.put(vertexLabel, new Vertex(vertexLabel));
         //Initialize the adjacency list for this vertex
         adjacencyList.put(vertexLabel, new ArrayList<>());
     }
@@ -60,27 +57,18 @@ public class GraphAdjList implements Graph {
      */
     @Override
     public int size() {
-        return vertices.size();
+        return adjacencyList.size();
     }
 
-    /**
-     * Clear the visited status of all vertices
-     */
-    @Override
-    public void clearVisited() {
-        for (Vertex vertex : vertices.values()) {
-            vertex.setVisited(false);
-        }
-    }
 
     /**
      * Display the graph
      */
     @Override
     public void display() {
-        for (Vertex vertex : vertices.values()) {
-            System.out.print(vertex.getLabel() + " ");
-            List<Edge> edges = adjacencyList.get(vertex.getLabel());
+        for (String vertexLabel : adjacencyList.keySet()) {
+            System.out.print(vertexLabel + " ");
+            List<Edge> edges = adjacencyList.get(vertexLabel);
             for (Edge edge : edges) {
                 String destLabel = edge.getNeighbourVertex();
                 int weight = edge.getWeight();
@@ -90,15 +78,6 @@ public class GraphAdjList implements Graph {
         }
     }
 
-    /**
-     * Get a vertex from the graph
-     * @param vertexLabelString
-     * @return
-     */
-    @Override
-    public Vertex getVertex(String vertexLabelString) {
-        return vertices.get(vertexLabelString);
-    }
 
     /**
      * Get the weight of an edge between two vertices

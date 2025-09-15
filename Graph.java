@@ -15,13 +15,6 @@ public interface Graph {
     void addEdge(String startLabel, String endLabel, int weight);
 
     /**
-     * Get a vertex from the graph
-     * @param index
-     * @return
-     */
-    public Vertex getVertex(String vertexLabel);
-
-    /**
      * Get the edges of a vertex
      * @param startLabel
      * @param endLabel
@@ -34,11 +27,6 @@ public interface Graph {
      * @return
      */
     int size();
-
-    /**
-     * Clear the visited status of all vertices
-     */
-    void clearVisited();
 
     /**
      * Display the graph
