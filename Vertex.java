@@ -1,7 +1,7 @@
 public class Vertex {
     // stores the label of the vertex
     private String label;
-    //  stores the status of the vertex
+    //  stores the status of the vertex - used in traversals    
     private boolean visited;
     public Vertex(String label) {
         this.label = label;
